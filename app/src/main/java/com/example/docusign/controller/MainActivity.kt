@@ -1,6 +1,8 @@
 package com.example.docusign.controller
 
 import android.os.Bundle
+import android.widget.EditText
+import kotlinx.android.synthetic.main.activity_main.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,11 +21,11 @@ class MainActivity : AppCompatActivity() {
     private var photoList: ArrayList<Photo> = ArrayList()
     private lateinit var gridLayoutManager: GridLayoutManager
 
+    private var buttonClicked: Boolean = false
+
     companion object{
         lateinit var adapter: RecyclerAdapter
     }
-
-
 
     private val lastVisibleImagePosition: Int
         get() = gridLayoutManager.findLastVisibleItemPosition()
@@ -36,10 +38,6 @@ class MainActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_main)
 
-        if (photoList.size == 1) {
-            requestImage()
-        }
-
         gridLayoutManager = GridLayoutManager(this, 2)
         recyclerView.layoutManager = gridLayoutManager
 
@@ -50,20 +48,23 @@ class MainActivity : AppCompatActivity() {
 
         setRecyclerViewScrollListener()
 
-        JsonTask(this).execute(ImageRequester.sURL)
-
+        button.setOnClickListener {
+            println(editText.text.toString())
+            PhotoGenerator.clearPhotos()
+            requestImage()
+            buttonClicked = true
+            textView.text = ""
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        if (photoList.size == 0) {
-            requestImage()
-        }
+        textView.text = "Search a picture!"
     }
 
     private fun requestImage() {
         try {
-            JsonTask(this).execute(ImageRequester.sURL)
+            JsonTask(this).execute(ImageRequester.getURL(this, editText.text.toString()))
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -81,7 +82,7 @@ class MainActivity : AppCompatActivity() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 val totalItemCount = recyclerView.layoutManager!!.itemCount
-                if (!ImageRequester.isLoadingData && totalItemCount == lastVisibleImagePosition + 1) {
+                if (buttonClicked && totalItemCount == lastVisibleImagePosition + 1) {
                     requestImage()
                 }
             }

@@ -6,10 +6,12 @@ import org.json.JSONObject
 class PhotoGenerator {
     companion object {
         var photosList = ArrayList<Photo>()
+        var hitNumber = 0
 
         fun parseJSON(photoData: String) {
             try {
-                val obj = JSONObject(photoData);
+                val obj = JSONObject(photoData)
+                hitNumber = obj.getString("totalHits").toInt()
                 val photoJSON = obj.getJSONArray("hits")
 
                 for (i in 0 until photoJSON.length()){
@@ -30,6 +32,10 @@ class PhotoGenerator {
             } catch (e: JSONException) {
                 e.printStackTrace();
             }
+        }
+
+        fun clearPhotos(){
+            photosList.clear()
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.docusign.controller
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -33,15 +34,16 @@ class RecyclerAdapter(private val photos: ArrayList<Photo>) : RecyclerView.Adapt
             v.setOnClickListener(this)
         }
 
+        @SuppressLint("SetTextI18n")
         fun bindPhoto(photo: Photo) {
             this.photo = photo
             Picasso.get().load(photo.largeImageURL).into(view.itemImage)
-            view.itemDate.text = photo.id
-            view.itemDescription.text = photo.user
+//            view.itemDate.text = photo.id
+            view.itemDescription.text = "By: "+ photo.user
         }
 
         override fun onClick(v: View?) {
-            TODO("Not yet implemented")
+            return
         }
     }
 }
