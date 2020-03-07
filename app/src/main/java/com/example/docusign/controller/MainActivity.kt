@@ -1,8 +1,8 @@
 package com.example.docusign.controller
 
+import android.os.Build
 import android.os.Bundle
-import android.widget.EditText
-import kotlinx.android.synthetic.main.activity_main.*
+import android.os.StrictMode
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -64,7 +64,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun requestImage() {
         try {
-            JsonTask(this).execute(ImageRequester.getURL(this, editText.text.toString()))
+            val url = ImageRequester.getURL(this, editText.text.toString())
+            JsonTask(this).execute(url)
         } catch (e: IOException) {
             e.printStackTrace()
         }

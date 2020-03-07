@@ -18,24 +18,21 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class ImageRequester{
     companion object{
-        val sURL = "https://pixabay.com/api/?key=???&image_type=photo&q="
+        val sURL = "https://pixabay.com/api/?key=&image_type=photo&q="
 
         fun getURL(context: Context, query:String): String?{
-            if (query != null || query!= ""){
+            if (query != ""){
                 val temp = sURL + query
                 return temp
-            }else{
-                val dialogBuilder = AlertDialog.Builder(context)
-                dialogBuilder.setMessage("Do you want to close this application ?")
-                    .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel()
-                    }
             }
             return null
         }
     }
 
 
-    class JsonTask(context: Context) : AsyncTask<String, String, String>() {
+    class JsonTask(context: MainActivity) : AsyncTask<String, String, String>() {
+        var activity = context
+
         override fun doInBackground(vararg params: String): String? {
             var connection: HttpURLConnection? = null
             var reader: BufferedReader? = null
@@ -85,9 +82,17 @@ class ImageRequester{
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
-            PhotoGenerator.parseJSON(result!!)
-            MainActivity.adapter.notifyDataSetChanged()
+            if(result != null){
+                PhotoGenerator.parseJSON(result!!)
+                if(PhotoGenerator.hitNumber > 0){
+                    MainActivity.adapter.notifyDataSetChanged()
+                    this.activity.textView.text = ""
+                } else{this.activity.textView.text = "No results. Search again!"}
 
+            }
+            else{
+                this.activity.textView.text = "You didn't search, search again!"
+            }
         }
     }
 
