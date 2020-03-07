@@ -20,7 +20,7 @@ class ImageRequester{
     companion object{
         val sURL = "https://pixabay.com/api/?key=&image_type=photo&q="
 
-        fun getURL(context: Context, query:String): String?{
+        fun getURL(query:String): String?{
             if (query != ""){
                 val temp = sURL + query
                 return temp
@@ -28,7 +28,6 @@ class ImageRequester{
             return null
         }
     }
-
 
     class JsonTask(context: MainActivity) : AsyncTask<String, String, String>() {
         var activity = context

@@ -38,8 +38,7 @@ class RecyclerAdapter(private val photos: ArrayList<Photo>) : RecyclerView.Adapt
         fun bindPhoto(photo: Photo) {
             this.photo = photo
             Picasso.get().load(photo.largeImageURL).into(view.itemImage)
-//            view.itemDate.text = photo.id
-            view.itemDescription.text = "By: "+ photo.user
+            view.user.text = "By: "+ photo.user
         }
 
         override fun onClick(v: View?) {

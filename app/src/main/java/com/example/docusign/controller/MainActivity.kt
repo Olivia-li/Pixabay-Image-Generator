@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun requestImage() {
         try {
-            val url = ImageRequester.getURL(this, editText.text.toString())
+            val url = ImageRequester.getURL(editText.text.toString())
             JsonTask(this).execute(url)
         } catch (e: IOException) {
             e.printStackTrace()
