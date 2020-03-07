@@ -14,7 +14,7 @@ class PhotoGenerator {
                 hitNumber = obj.getString("totalHits").toInt()
                 val photoJSON = obj.getJSONArray("hits")
 
-                for (i in 0 until photoJSON.length()){
+                for (i in 0 until photoJSON.length()) {
                     var photo = photoJSON.getJSONObject(i)
                     val id = photo.getString("id")
                     val largeImageURL = photo.getString("largeImageURL")
@@ -34,7 +34,7 @@ class PhotoGenerator {
             }
         }
 
-        fun clearPhotos(){
+        fun clearPhotos() {
             photosList.clear()
         }
     }

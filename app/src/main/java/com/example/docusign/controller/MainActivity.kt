@@ -18,31 +18,32 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var photoList: ArrayList<Photo> = ArrayList()
+    // GridLayoutMaster setup
     private lateinit var gridLayoutManager: GridLayoutManager
-
-    private var buttonClicked: Boolean = false
-
-    companion object{
-        lateinit var adapter: RecyclerAdapter
-    }
-
     private val lastVisibleImagePosition: Int
         get() = gridLayoutManager.findLastVisibleItemPosition()
 
+    companion object {
+        lateinit var adapter: RecyclerAdapter
+    }
+
+    private var buttonClicked: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Remove header
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
+
         setContentView(R.layout.activity_main)
 
         gridLayoutManager = GridLayoutManager(this, 2)
         recyclerView.layoutManager = gridLayoutManager
 
-        adapter =
-            RecyclerAdapter(PhotoGenerator.photosList)
+        adapter = RecyclerAdapter(PhotoGenerator.photosList)
         recyclerView.adapter =
             adapter
 
@@ -64,19 +65,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun requestImage() {
         try {
-            val url = ImageRequester.getURL(editText.text.toString())
+            val url = ImageRequester.getURL(editText.text.toString().trim())
             JsonTask(this).execute(url)
         } catch (e: IOException) {
             e.printStackTrace()
         }
     }
 
-    fun receivedNewPhoto(newPhoto: Photo) {
-        runOnUiThread {
-            photoList.add(newPhoto)
-            adapter.notifyItemInserted(photoList.size-1)
-        }
-    }
 
     private fun setRecyclerViewScrollListener() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {

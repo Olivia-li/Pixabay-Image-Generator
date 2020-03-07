@@ -7,7 +7,7 @@ class Photo(id: String, largeImageURL: String, likes: String, user: String) {
     var likes: String
     var user: String
 
-    init{
+    init {
         this.id = id
         this.largeImageURL = largeImageURL
         this.likes = likes

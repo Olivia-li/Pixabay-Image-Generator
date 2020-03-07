@@ -16,12 +16,13 @@ import android.content.DialogInterface
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class ImageRequester{
-    companion object{
-        val sURL = "https://pixabay.com/api/?key=&image_type=photo&q="
+class ImageRequester {
+    companion object {
+        val sURL =
+            "https://pixabay.com/api/?key=&image_type=photo&q="
 
-        fun getURL(query:String): String?{
-            if (query != ""){
+        fun getURL(query: String): String? {
+            if (query != "") {
                 val temp = sURL + query
                 return temp
             }
@@ -40,34 +41,24 @@ class ImageRequester{
                 val url = URL(params[0])
                 connection = url.openConnection() as HttpURLConnection
                 connection.connect()
-
                 val stream: InputStream = connection.getInputStream()
-
                 reader = BufferedReader(InputStreamReader(stream))
-
                 val buffer = StringBuffer()
-
                 var line = ""
-
                 var nextLine = true
 
                 while (nextLine) {
                     line = reader.readLine()
                     buffer.append(line + "\n");
-                    Log.d("Response: ", "> $line")
-
                     if (reader.readLine() == null)
                         nextLine = false
                 }
-
                 return buffer.toString()
 
             } catch (e: MalformedURLException) {
                 e.printStackTrace()
-
             } catch (e: IOException) {
                 e.printStackTrace()
-
             } finally {
                 connection?.disconnect()
                 try {
@@ -81,15 +72,16 @@ class ImageRequester{
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
-            if(result != null){
+            if (result != null) {
                 PhotoGenerator.parseJSON(result!!)
-                if(PhotoGenerator.hitNumber > 0){
+                if (PhotoGenerator.hitNumber > 0) {
                     MainActivity.adapter.notifyDataSetChanged()
                     this.activity.textView.text = ""
-                } else{this.activity.textView.text = "No results. Search again!"}
+                } else {
+                    this.activity.textView.text = "No results. Search again!"
+                }
 
-            }
-            else{
+            } else {
                 this.activity.textView.text = "You didn't search, search again!"
             }
         }

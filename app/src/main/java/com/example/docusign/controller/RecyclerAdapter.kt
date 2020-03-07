@@ -1,6 +1,7 @@
 package com.example.docusign.controller
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,8 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.picture_item.view.*
 
 
-class RecyclerAdapter(private val photos: ArrayList<Photo>) : RecyclerView.Adapter<RecyclerAdapter.PhotoHolder>()  {
+class RecyclerAdapter(private val photos: ArrayList<Photo>) :
+    RecyclerView.Adapter<RecyclerAdapter.PhotoHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoHolder {
         val inflatedView = parent.inflate(R.layout.picture_item, false)
@@ -26,11 +28,11 @@ class RecyclerAdapter(private val photos: ArrayList<Photo>) : RecyclerView.Adapt
         holder.bindPhoto(itemPhoto)
     }
 
-    class PhotoHolder(v: View): RecyclerView.ViewHolder(v), View.OnClickListener{
+    class PhotoHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         private var view: View = v
         private var photo: Photo? = null
 
-        init{
+        init {
             v.setOnClickListener(this)
         }
 
@@ -38,11 +40,19 @@ class RecyclerAdapter(private val photos: ArrayList<Photo>) : RecyclerView.Adapt
         fun bindPhoto(photo: Photo) {
             this.photo = photo
             Picasso.get().load(photo.largeImageURL).into(view.itemImage)
-            view.user.text = "By: "+ photo.user
+            view.user.text = "By: " + photo.user
+
         }
 
         override fun onClick(v: View?) {
-            return
+            val intent = Intent(v!!.context, DetailActivity::class.java)
+            val url = this.photo!!.largeImageURL
+            val user = this.photo!!.user
+            intent.putExtra("imageURL", url)
+            intent.putExtra("user", user)
+            v.context.startActivity(intent)
         }
+
+
     }
 }
