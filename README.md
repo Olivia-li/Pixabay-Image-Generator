@@ -1,11 +1,9 @@
 # Pixabay Image Generator 
-Kotlin app to find images utilizing the PixaBay API
 
-<p float="left">
-  <img src="https://github.com/Olivia-li/Pixabay-Image-Generator/blob/media/grid.png" width="100" />
-  <img src="https://github.com/Olivia-li/Pixabay-Image-Generator/blob/media/detail.png" width="100" /> 
-  <img src="https://github.com/Olivia-li/Pixabay-Image-Generator/blob/media/error.png" width="100" />
-</p>
+Kotlin app to find images utilizing the PixaBay API
+![Grid View](https://github.com/Olivia-li/Pixabay-Image-Generator/blob/media/grid.png)
+![Detail View](https://github.com/Olivia-li/Pixabay-Image-Generator/blob/media/detail.png)
+![Error Messages](https://github.com/Olivia-li/Pixabay-Image-Generator/blob/media/error.png)
 
 Register your API Key at
 [https://pixabay.com/](https://pixabay.com/)
