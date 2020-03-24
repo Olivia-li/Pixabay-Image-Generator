@@ -1,6 +1,6 @@
 # Pixabay Image Generator 
 
-Kotlin app to find images utilizing the PixaBay API
+A Kotlin app that uses the PixaBay API to find images.
 
 <p float="left">
   <img src="https://github.com/Olivia-li/Pixabay-Image-Generator/blob/media/grid.png" width="400" />
